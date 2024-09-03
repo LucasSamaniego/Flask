@@ -98,3 +98,4 @@ def map():
 
     picam2.stop()
     cv2.destroyAllWindows()
+    return()
