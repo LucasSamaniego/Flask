@@ -4,8 +4,9 @@ import navegation as navy
 app = Flask(__name__)
 
 def function_one():
-    print("Function One Executed")
-    return "Function One Executed"
+    print("Função um executada")
+    navy.map()
+    return "Função um executada"
 
 def function_two():
     print("Function Two Executed")
@@ -18,8 +19,8 @@ def index():
 @app.route('/execute', methods=['POST'])
 def execute():
     if request.method == 'POST':
-        if request.form['action'] == 'Navegacao':
-            result = navy.map()
+        if request.form['action'] == 'Function One':
+            result = function_one()
         elif request.form['action'] == 'Function Two':
             result = function_two()
         return render_template('index.html', result=result)
