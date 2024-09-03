@@ -71,8 +71,9 @@ def map(destino):
     picam2.start()
 
     print("Lendo QR Code...")
+    pos_usuario = None
 
-    while True:
+    while pos_usuario != destino:
         # Capturando o frame da câmera
         frame = picam2.capture_array()
         
@@ -92,10 +93,4 @@ def map(destino):
 
                 # Atualizando a última posição
                 ultima_posicao = pos_usuario
-
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
     picam2.stop()
-    cv2.destroyAllWindows()
-    return "Navegação completada"

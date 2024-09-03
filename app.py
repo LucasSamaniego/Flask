@@ -4,10 +4,11 @@ import navegation as navy
 app = Flask(__name__)
 
 def function_one():
-    print("Função um executada")
+    print("Modo navegação executado")
     destino = "SalaB"
     navy.map(destino)
-    return "Função um executada"
+    
+    return "Modo navegação encerrado"
 
 def function_two():
     print("Function Two Executed")
