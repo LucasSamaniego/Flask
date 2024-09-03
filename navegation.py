@@ -3,6 +3,7 @@ from pyzbar.pyzbar import decode
 from picamera2 import Picamera2
 import numpy as np
 import cv2
+import display
 
 # Função para determinar a direção com base nas coordenadas
 def calcular_direcao(pos1, pos2):
@@ -89,7 +90,7 @@ def map(destino):
                 
                 # Calculando a próxima direção a ser seguida
                 proxima_direcao = calcular_direcoes(nodos, G, pos_usuario, destino)
-                print(proxima_direcao)
+                print(proxima_direcao) # CRIAR FUNÇÃO PARA MOSTRAR A SETA DE DIREÇÃO NO DISPLAY
 
                 # Atualizando a última posição
                 ultima_posicao = pos_usuario

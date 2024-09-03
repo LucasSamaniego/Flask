@@ -1,18 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for
 import navegation as navy
+import detail
 
 app = Flask(__name__)
 
-def function_one():
+def navy_mode():
     print("Modo navegação executado")
     destino = "SalaB"
     navy.map(destino)
-    
+
     return "Modo navegação encerrado"
 
-def function_two():
-    print("Function Two Executed")
-    return "Function Two Executed"
+def detail_mode():
+    print("Modo detalhamento executado")
+
+    
+
+    return "Modo detalhamento encerrado"
 
 @app.route('/')
 def index():
@@ -22,9 +26,9 @@ def index():
 def execute():
     if request.method == 'POST':
         if request.form['action'] == 'Function One':
-            result = function_one()
+            result = navy_mode()
         elif request.form['action'] == 'Function Two':
-            result = function_two()
+            result = detail_mode()
         return render_template('index.html', result=result)
     return redirect(url_for('index'))
 
