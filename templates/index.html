@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Function One</a></li>
+            <li><a href="#">Function Two</a></li>
+            <li><a href="#">Settings</a></li>
+        </ul>
+    </div>
+    
+    <div class="main-content" id="main-content">
+        <button class="toggle-btn" onclick="toggleSidebar()">&#9776;</button>
+        <h1>Dashboard</h1>
+        <form method="post" action="/execute">
+            <button type="submit" name="action" value="Function One">Run Function One</button>
+            <button type="submit" name="action" value="Function Two">Run Function Two</button>
+        </form>
+        {% if result %}
+        <p>{{ result }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            var mainContent = document.getElementById("main-content");
+            sidebar.classList.toggle("active");
+            mainContent.classList.toggle("expanded");
+        }
+    </script>
+</body>
+</html>
