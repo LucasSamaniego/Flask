@@ -22,7 +22,7 @@ def ler_qr_code(frame):
     return None
 
 # Função para calcular a direção do próximo passo
-def calcular_direcoes(G, pos_usuario, destino):
+def calcular_direcoes(nodos, G, pos_usuario, destino):
     shortest_path = nx.shortest_path(G, source=pos_usuario, target=destino, weight='weight')
     if len(shortest_path) < 2:
         return "Destino já alcançado ou caminho inválido"
@@ -32,7 +32,7 @@ def calcular_direcoes(G, pos_usuario, destino):
     return direcao
 
 #Função principal
-def map():
+def map(destino):
 
     # Criando um grafo
     G = nx.Graph()
@@ -87,7 +87,7 @@ def map():
                 print(f"\nPosição atual do usuário: {pos_usuario}")
                 
                 # Calculando a próxima direção a ser seguida
-                proxima_direcao = calcular_direcoes(G, pos_usuario, "SalaB")
+                proxima_direcao = calcular_direcoes(nodos, G, pos_usuario, destino)
                 print(proxima_direcao)
 
                 # Atualizando a última posição

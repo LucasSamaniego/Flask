@@ -5,7 +5,8 @@ app = Flask(__name__)
 
 def function_one():
     print("Função um executada")
-    navy.map()
+    destino = "SalaB"
+    navy.map(destino)
     return "Função um executada"
 
 def function_two():
