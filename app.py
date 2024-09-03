@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+import navegation as navy
 
 app = Flask(__name__)
 
@@ -17,8 +18,8 @@ def index():
 @app.route('/execute', methods=['POST'])
 def execute():
     if request.method == 'POST':
-        if request.form['action'] == 'Function One':
-            result = function_one()
+        if request.form['action'] == 'Navegacao':
+            result = navy.map()
         elif request.form['action'] == 'Function Two':
             result = function_two()
         return render_template('index.html', result=result)
