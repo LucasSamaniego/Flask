@@ -1,5 +1,5 @@
 import paho.mqtt.client as mqtt
-import time
+import threading
 
 class MqttClient:
     def __init__(self, broker, port=1883, client_id=None, username=None, password=None):
@@ -9,7 +9,9 @@ class MqttClient:
         self.username = username
         self.password = password
         self.client = mqtt.Client(client_id)
-        
+        self.message_received = threading.Event()  # Evento para sincronização
+        self.message = None
+
         # Configuração de autenticação, se fornecido
         if username and password:
             self.client.username_pw_set(username, password)
@@ -24,7 +26,9 @@ class MqttClient:
 
     def on_message(self, client, userdata, msg):
         """Callback quando uma mensagem é recebida de um tópico inscrito."""
-        print(f"Mensagem recebida '{msg.payload.decode()}' no tópico '{msg.topic}'")
+        self.message = msg.payload.decode()
+        self.message_received.set()  # Sinaliza que uma mensagem foi recebida
+        print(f"Mensagem recebida '{self.message}' no tópico '{msg.topic}'")
 
     def connect(self):
         """Conecta ao broker MQTT."""
@@ -47,61 +51,38 @@ class MqttClient:
         self.client.disconnect()
         print("Desconectado do broker MQTT")
 
-mensagem = None
-
-# Callback quando uma mensagem é recebida
-def on_message(client, userdata, msg):
-    print(f"Mensagem recebida no tópico {msg.topic}: {msg.payload.decode()}")
-    global mensagem = msg.payload.decode()
-
 def conect_broker():
-    if __name__ == "__main__":
-        mqtt_broker = "test.mosquitto.org"  # Altere para o endereço do seu broker MQTT
-        mqtt_port = 1883  # Altere se o broker usar uma porta diferente
-        mqtt_client_id = "raspberry_pi_client"  # Opcional
-        mqtt_username = None  # Altere se seu broker exigir autenticação
-        mqtt_password = None  # Altere se seu broker exigir autenticação
+    mqtt_broker = "test.mosquitto.org"  # Altere para o endereço do seu broker MQTT
+    mqtt_port = 1883  # Altere se o broker usar uma porta diferente
+    mqtt_client_id = "raspberry_pi_client"  # Opcional
+    mqtt_username = None  # Altere se seu broker exigir autenticação
+    mqtt_password = None  # Altere se seu broker exigir autenticação
 
-        client = MqttClient(mqtt_broker, mqtt_port, mqtt_client_id, mqtt_username, mqtt_password)
-        
-        #client.connect()
-        #client.subscribe("info")
-    
+    client = MqttClient(mqtt_broker, mqtt_port, mqtt_client_id, mqtt_username, mqtt_password)
+    client.connect()
     return client
 
 def solicitar(item):
-    raspberry = conect_broker() # Conecta o raspberry pi ao broker mqtt
-
+    client = conect_broker()  # Conecta o cliente ao broker MQTT
     try:
-        raspberry.publish("detail/item/publish", item)
+        client.publish("detail/item/publish", item)
     except KeyboardInterrupt:
         print("Interrompido pelo usuário")
     finally:
-        raspberry.disconnect()
+        client.disconnect()
 
-def receber():
-    raspberry = conect_broker() # Conecta o raspberry pi ao broker mqtt
-    raspberry.subscribe("detail/item/subscribe")
-    raspberry.on_message = on_message
-    raspberry.connect()
+def receber(timeout=10):
+    client = conect_broker()  # Conecta o cliente ao broker MQTT
+    client.subscribe("detail/item/subscribe")
 
-    # Mantém o cliente rodando para escutar mensagens
-    #raspberry.loop_forever()
+    # Espera por uma mensagem por um tempo especificado
+    client.message_received.wait(timeout)
 
-    count = 1
-    raspberry.loop_start()
+    message = client.message
+    client.disconnect()
 
-    try:
-        # Mantenha o script rodando para que as mensagens possam ser recebidas
-        while True:
-            pass
-    finally:
-        # Pare o loop MQTT e desconecte-se quando o script for encerrado
-        raspberry.loop_stop()
-        raspberry.disconnect()
-        if mensagem != None:
-            return mensagem
-        elif count == 10:
-            return "Informação não recebida"
-        count = count + 1
+    if message:
+        return message
+    else:
+        return "Informação não recebida"
 
