@@ -13,10 +13,12 @@ def navy_mode():
 
 def detail_mode():
     print("Modo detalhamento executado")
+    item = "123"
 
-    
+    detail.solicitar(item)
+    detalhes = detail.receber()
 
-    return "Modo detalhamento encerrado"
+    return detalhes
 
 @app.route('/')
 def index():
