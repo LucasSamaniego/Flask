@@ -3,4 +3,6 @@ networkx
 picamera2
 numpy
 opencv-python
+opencv-python-headless
+opencv-contrib-python
 paho-mqtt==1.6.1
