@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
-#import navegation as navy
+import navegation as navy
 import detail
 
 app = Flask(__name__)
 
 def navy_mode():
-#    print("Modo navegação executado")
-#    destino = "SalaB"
-#    navy.map(destino)
+    print("Modo navegação executado")
+    destino = "SalaB"
+    navy.map(destino)
 
     return "Modo navegação encerrado"
 
