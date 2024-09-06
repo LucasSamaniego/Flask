@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Navegação</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard Geral</a></li>
+            <li><a href="{{ url_for('navegacao') }}">Navegação</a></li>
+            <li><a href="{{ url_for('detalhamento') }}">Detalhamento</a></li>
+            <li><a href="{{ url_for('recebimento') }}">Recebimento</a></li>
+            <li><a href="{{ url_for('retirada') }}">Retirada</a></li>
+        </ul>
+    </div>
+    <div class="main-content" id="main-content">
+        <h1>Modo de Navegação</h1>
+        <!-- Conteúdo adicional aqui -->
+    </div>
+</body>
+</html>

@@ -21,8 +21,33 @@ def detail_mode():
     return detalhes
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def dashboard():
+    return render_template('dashboard.html')
+
+# Rota para a página de navegação
+@app.route('/navegacao')
+def navegacao():
+    return render_template('navegacao.html')
+
+# Rota para a página de detalhamento
+@app.route('/detalhamento')
+def detalhamento():
+    return render_template('detalhamento.html')
+
+# Rota para a página de recebimento
+@app.route('/recebimento')
+def recebimento():
+    return render_template('recebimento.html')
+
+# Rota para a página de retirada
+@app.route('/retirada')
+def retirada():
+    return render_template('retirada.html')
+
+
+
+
+
 
 @app.route('/execute', methods=['POST'])
 def execute():
