@@ -4,3 +4,4 @@ Este projeto tem como objetivo implementar uma aplicação web que rode em um ra
 2) Ler QR Code de itens, a fim de obter detalhes de suas características.
 3) Poder realizar a contagem da quantidade de certos materiais por meio de visão computacional.
 4) Visualizar, por meio de dashboards, a condição de um estoque em tempo real.
+5) Realizar o recebimento e retirada de itens por meio de QR Code.
